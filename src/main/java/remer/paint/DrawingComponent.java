@@ -8,7 +8,10 @@ public class DrawingComponent extends JComponent {
     private final BufferedImage image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
     private int oldX = -1;
     private int oldY = -1;
-    private int tempX1 = -1, tempY1 = -1, tempX2 = -1, tempY2 = -1;
+    private int tempX1 = -1;
+    private int tempY1 = -1;
+    private int tempX2 = -1;
+    private int tempY2 = -1;
     boolean isTemporary = false;
     private Color currentColor = Color.BLACK;
 
