@@ -8,12 +8,11 @@ import java.awt.event.MouseMotionListener;
 
 public class PaintGui extends JFrame
 {
-    // Create a drawing component where the user can draw
     private final DrawingComponent canvas = new DrawingComponent();
     private Color currentColor = Color.BLACK;
     private Point startPoint = null;
+    private boolean isLineToolActive = false; // Track if line tool is active
 
-    // Constructor to set up the GUI
     public PaintGui()
     {
         setTitle("Paint");
@@ -21,10 +20,8 @@ public class PaintGui extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Create a button for choosing colors
         JButton colorButton = new JButton("Choose color");
         colorButton.addActionListener(e -> {
-            // Update the current color if a new color is selected
             Color newColor = JColorChooser.showDialog(this, "Choose a color", currentColor);
             if (newColor != null)
             {
@@ -32,22 +29,32 @@ public class PaintGui extends JFrame
             }
         });
 
-        // Create a panel to hold the color chooser button
+        JButton lineButton = new JButton("Line Tool");
+        lineButton.addActionListener(e -> {
+            isLineToolActive = !isLineToolActive; // Toggle line tool
+            lineButton.setText(isLineToolActive ? "Line Tool (Active)" : "Line Tool");
+        });
+
         JPanel topPanel = new JPanel();
         topPanel.add(colorButton);
+        topPanel.add(lineButton);
         add(topPanel, BorderLayout.NORTH);
         add(canvas, BorderLayout.CENTER);
 
-        // Mouse motion listener to the canvas for drawing
         canvas.addMouseMotionListener(new MouseMotionListener()
         {
             @Override
             public void mouseDragged(MouseEvent event)
             {
-                // If the start point is set, draw a line from the start point to the current mouse position
                 if (startPoint != null)
                 {
-                    canvas.drawLine(startPoint.x, startPoint.y, event.getX(), event.getY(), currentColor);
+                    if (isLineToolActive)
+                    {
+                        // Draw a temporary line while dragging
+                        canvas.drawTemporaryLine(startPoint.x, startPoint.y, event.getX(), event.getY(), currentColor);
+                    } else {
+                        canvas.drawLine(startPoint.x, startPoint.y, event.getX(), event.getY(), currentColor);
+                    }
                 } else {
                     canvas.drawFromMouse(event.getX(), event.getY(), currentColor);
                 }
@@ -60,7 +67,6 @@ public class PaintGui extends JFrame
             }
         });
 
-        // Add mouse listener to handle mouse clicks and releases
         canvas.addMouseListener(new MouseListener()
         {
             @Override
@@ -70,7 +76,8 @@ public class PaintGui extends JFrame
             }
 
             @Override
-            public void mousePressed(MouseEvent e) {
+            public void mousePressed(MouseEvent e)
+            {
                 // No action needed
             }
 
@@ -79,8 +86,12 @@ public class PaintGui extends JFrame
             {
                 if (startPoint != null)
                 {
-                    canvas.drawLine(startPoint.x, startPoint.y, e.getX(), e.getY(), currentColor);
+                    if (isLineToolActive)
+                    {
+                        canvas.drawLine(startPoint.x, startPoint.y, e.getX(), e.getY(), currentColor);
+                    }
                     startPoint = null;
+                    canvas.clearTemporaryLine(); // Clear the temporary line
                 }
             }
 
@@ -98,7 +109,8 @@ public class PaintGui extends JFrame
         });
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         PaintGui frame = new PaintGui();
         frame.setVisible(true);
     }

@@ -4,14 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-// Where the drawing actually happens
 public class DrawingComponent extends JComponent
 {
     private final BufferedImage image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
     private int oldX = -1;
     private int oldY = -1;
 
-    // Constructor to initialize the drawing component
     public DrawingComponent()
     {
         Graphics g = image.getGraphics();
@@ -19,7 +17,6 @@ public class DrawingComponent extends JComponent
         g.fillRect(0, 0, image.getWidth(), image.getHeight());
     }
 
-    // PaintComponent method to draw the image on the component
     @Override
     protected void paintComponent(Graphics g)
     {
@@ -27,7 +24,6 @@ public class DrawingComponent extends JComponent
         g.drawImage(image, 0, 0, null);
     }
 
-    // Draw continuously from the mouse position
     public void drawFromMouse(int x, int y, Color color)
     {
         Graphics g = image.getGraphics();
@@ -43,7 +39,6 @@ public class DrawingComponent extends JComponent
         repaint();
     }
 
-    // Draw a line between two points
     public void drawLine(int x1, int y1, int x2, int y2, Color color)
     {
         Graphics g = image.getGraphics();
@@ -51,5 +46,24 @@ public class DrawingComponent extends JComponent
         g.drawLine(x1, y1, x2, y2);
         repaint();
     }
-}
 
+    // Draw a temporary line while dragging
+    public void drawTemporaryLine(int x1, int y1, int x2, int y2, Color color)
+    {
+        // Clear the previous temporary line
+        Graphics g = image.getGraphics();
+        g.setColor(Color.WHITE);
+        g.drawLine(x1, y1, x2, y2); // Clear the previous line
+        g.setColor(color);
+        g.drawLine(x1, y1, x2, y2); // Draw the new temporary line
+        repaint();
+    }
+
+    // Clear the temporary line
+    public void clearTemporaryLine()
+    {
+        oldX = -1;
+        oldY = -1;
+        repaint();
+    }
+}
