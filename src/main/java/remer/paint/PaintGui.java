@@ -69,9 +69,9 @@ public class PaintGui extends JFrame
                     if (isLineToolActive)
                     {
                         // Draw a temporary line while dragging
-                        canvas.drawTemporaryLine(startPoint.x, startPoint.y, event.getX(), event.getY(), currentColor);
+                        canvas.drawLine(startPoint.x, startPoint.y, event.getX(), event.getY(), currentColor, true);
                     } else {
-                        canvas.drawLine(startPoint.x, startPoint.y, event.getX(), event.getY(), currentColor);
+                        canvas.drawLine(startPoint.x, startPoint.y, event.getX(), event.getY(), currentColor, false);
                     }
                 } else {
                     canvas.drawFromMouse(event.getX(), event.getY(), currentColor);
@@ -106,7 +106,7 @@ public class PaintGui extends JFrame
                 {
                     if (isLineToolActive)
                     {
-                        canvas.drawLine(startPoint.x, startPoint.y, e.getX(), e.getY(), currentColor);
+                        canvas.drawLine(startPoint.x, startPoint.y, e.getX(), e.getY(), currentColor, false);
                     }
                     startPoint = null;
                     canvas.clearTemporaryLine(); // Clear the temporary line
