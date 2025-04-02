@@ -12,12 +12,7 @@ public class PaintGui extends JFrame {
     private Point startPoint = null;
     private boolean isLineToolActive = false; // Track if line tool is active
 
-    // Enum to represent the active tool
-    private enum Tool {
-        NONE, LINE
-    }
-
-    private final Tool activeTool = Tool.NONE;    // Track the currently active tool
+    private PencilTool pencilTool = new PencilTool();
 
     public PaintGui() {
         setTitle("Paint");
@@ -48,9 +43,10 @@ public class PaintGui extends JFrame {
         canvas.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                if (isLineToolActive && startPoint != null) {
-                    canvas.setTemporaryLine(startPoint.x, startPoint.y, e.getX(), e.getY(), currentColor);
-                }
+                Graphics g = canvas.getImage().getGraphics();
+                g.setColor(Color.BLACK);
+                pencilTool.dragged(canvas.getImage().getGraphics(), e.getX(), e.getY());
+                canvas.repaint();
             }
 
             @Override
@@ -62,23 +58,23 @@ public class PaintGui extends JFrame {
         canvas.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                startPoint = e.getPoint();
+
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-                if (isLineToolActive) {
-                    startPoint = e.getPoint();
-                }
+                Graphics g = canvas.getImage().getGraphics();
+                g.setColor(Color.BLACK);
+                pencilTool.pressed(canvas.getImage().getGraphics(), e.getX(), e.getY());
+                canvas.repaint();
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                if (isLineToolActive && startPoint != null) {
-                    canvas.drawLine(startPoint.x, startPoint.y, e.getX(), e.getY(), currentColor);
-                    startPoint = null;
-                    canvas.clearTemporaryLine();
-                }
+                Graphics g = canvas.getImage().getGraphics();
+                g.setColor(Color.BLACK);
+                pencilTool.released(canvas.getImage().getGraphics(), e.getX(), e.getY());
+                canvas.repaint();
             }
 
             @Override
