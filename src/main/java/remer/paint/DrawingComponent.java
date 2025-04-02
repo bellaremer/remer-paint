@@ -43,7 +43,7 @@ public class DrawingComponent extends JComponent
     {
         // if the line is temporary, draw it on the component's graphics
         if (!isTemporary) {
-            Graphics g = image.getGraphics();
+            Graphics g = getGraphics();
             g.setColor(color);
             g.drawLine(x1, y1, x2, y2);
             g.dispose();
