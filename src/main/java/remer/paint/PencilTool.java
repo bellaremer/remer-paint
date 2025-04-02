@@ -25,6 +25,11 @@ public class PencilTool implements Tool
     }
 
     @Override
+    public void preview(Graphics g) {
+        // nothing
+    }
+
+    @Override
     public void released(Graphics g, int x, int y)
     {
         // no action needed
