@@ -19,7 +19,7 @@ public class PaintGui extends JFrame
         NONE, LINE
     }
 
-    private Tool activeTool = Tool.NONE;    // Track the currently active tool
+    private final Tool activeTool = Tool.NONE;    // Track the currently active tool
 
     public PaintGui()
     {
@@ -39,18 +39,8 @@ public class PaintGui extends JFrame
 
         JButton lineButton = new JButton("Line Tool");
         lineButton.addActionListener(e -> {
-            if (activeTool == Tool.LINE)
-            {
-                // Deactivate the line tool
-                activeTool = Tool.NONE;
-                isLineToolActive = false;
-                lineButton.setText("Line Tool");
-            } else {
-                // Active line tool
-                activeTool = Tool.LINE;
-                isLineToolActive = true;
-                lineButton.setText("Line Tool");
-            }
+            isLineToolActive = !isLineToolActive;
+            lineButton.setText(isLineToolActive ? "Line Tool (Active)" : "Line Tool");
         });
 
         JPanel topPanel = new JPanel();
@@ -62,19 +52,11 @@ public class PaintGui extends JFrame
         canvas.addMouseMotionListener(new MouseMotionListener()
         {
             @Override
-            public void mouseDragged(MouseEvent event)
+            public void mouseDragged(MouseEvent e)
             {
-                if (startPoint != null)
+                if (isLineToolActive && startPoint != null)
                 {
-                    if (isLineToolActive)
-                    {
-                        // Draw a temporary line while dragging
-                        canvas.drawLine(startPoint.x, startPoint.y, event.getX(), event.getY(), currentColor, true);
-                    } else {
-                        canvas.drawLine(startPoint.x, startPoint.y, event.getX(), event.getY(), currentColor, false);
-                    }
-                } else {
-                    canvas.drawFromMouse(event.getX(), event.getY(), currentColor);
+                    canvas.setTemporaryLine(startPoint.x, startPoint.y, e.getX(), e.getY(), currentColor);
                 }
             }
 
@@ -96,20 +78,20 @@ public class PaintGui extends JFrame
             @Override
             public void mousePressed(MouseEvent e)
             {
-                // No action needed
+                if (isLineToolActive)
+                {
+                    startPoint = e.getPoint();
+                }
             }
 
             @Override
             public void mouseReleased(MouseEvent e)
             {
-                if (startPoint != null)
+                if (isLineToolActive && startPoint != null)
                 {
-                    if (isLineToolActive)
-                    {
-                        canvas.drawLine(startPoint.x, startPoint.y, e.getX(), e.getY(), currentColor, false);
-                    }
+                    canvas.drawLine(startPoint.x, startPoint.y, e.getX(), e.getY(), currentColor);
                     startPoint = null;
-                    canvas.clearTemporaryLine(); // Clear the temporary line
+                    canvas.clearTemporaryLine();
                 }
             }
 
