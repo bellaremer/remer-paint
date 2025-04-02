@@ -13,6 +13,14 @@ public class PaintGui extends JFrame
     private Point startPoint = null;
     private boolean isLineToolActive = false; // Track if line tool is active
 
+    // Enum to represent the active tool
+    private enum Tool
+    {
+        NONE, LINE
+    }
+
+    private Tool activeTool = Tool.NONE;    // Track the currently active tool
+
     public PaintGui()
     {
         setTitle("Paint");
@@ -31,8 +39,18 @@ public class PaintGui extends JFrame
 
         JButton lineButton = new JButton("Line Tool");
         lineButton.addActionListener(e -> {
-            isLineToolActive = !isLineToolActive; // Toggle line tool
-            lineButton.setText(isLineToolActive ? "Line Tool (Active)" : "Line Tool");
+            if (activeTool == Tool.LINE)
+            {
+                // Deactivate the line tool
+                activeTool = Tool.NONE;
+                isLineToolActive = false;
+                lineButton.setText("Line Tool");
+            } else {
+                // Active line tool
+                activeTool = Tool.LINE;
+                isLineToolActive = true;
+                lineButton.setText("Line Tool");
+            }
         });
 
         JPanel topPanel = new JPanel();

@@ -9,6 +9,10 @@ public class DrawingComponent extends JComponent
     private final BufferedImage image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
     private int oldX = -1;
     private int oldY = -1;
+    private int tempLineX1 = -1;
+    private int tempLineY1 = -1;
+    private int tempLineX2 = -1;
+    private int tempLineY2 = -1;
 
     public DrawingComponent()
     {
@@ -47,15 +51,14 @@ public class DrawingComponent extends JComponent
         repaint();
     }
 
-    // Draw a temporary line while dragging
+    // Draw a temporary line while dragging without clearing the canvas
     public void drawTemporaryLine(int x1, int y1, int x2, int y2, Color color)
     {
-        // Clear the previous temporary line
+        // Draw the new temporary line without clearing the previous drawings
         Graphics g = image.getGraphics();
-        g.setColor(Color.WHITE);
-        g.drawLine(x1, y1, x2, y2); // Clear the previous line
         g.setColor(color);
-        g.drawLine(x1, y1, x2, y2); // Draw the new temporary line
+        g.drawLine(x1, y1, x2, y2);
+
         repaint();
     }
 
@@ -64,6 +67,10 @@ public class DrawingComponent extends JComponent
     {
         oldX = -1;
         oldY = -1;
+        tempLineX1 = -1;
+        tempLineY1 = -1;
+        tempLineX2 = -1;
+        tempLineY2 = -1;
         repaint();
     }
 }
