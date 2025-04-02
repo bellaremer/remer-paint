@@ -41,15 +41,21 @@ public class DrawingComponent extends JComponent
 
     public void drawLine(int x1, int y1, int x2, int y2, Color color, boolean isTemporary)
     {
-        Graphics g = image.getGraphics();
-        g.setColor(color);
-        g.drawLine(x1, y1, x2, y2);
-
+        // if the line is temporary, draw it on the component's graphics
         if (!isTemporary) {
+            Graphics g = image.getGraphics();
+            g.setColor(color);
+            g.drawLine(x1, y1, x2, y2);
+            g.dispose();
+        } else {
+            // If it's not temporary, draw it on the image
+            Graphics g = image.getGraphics();
+            g.setColor(color);
+            g.drawLine(x1, y1, x2, y2);
+            g.dispose();
             repaint();
         }
     }
-
 
     // Clear the temporary line
     public void clearTemporaryLine()
