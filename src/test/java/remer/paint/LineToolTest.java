@@ -10,12 +10,13 @@ class LineToolTest
 {
 
     private Graphics g = mock(Graphics.class);
+    private PaintController controller = mock(PaintController.class);
 
     @Test
     void pressed()
     {
         // given
-        LineTool tool = new LineTool();
+        LineTool tool = new LineTool(controller);
 
         // when
         tool.pressed(g, 50, 100);
@@ -30,7 +31,7 @@ class LineToolTest
     void dragged()
     {
         // given
-        LineTool tool = new LineTool();
+        LineTool tool = new LineTool(controller);
         tool.pressed(g, 50, 100);
 
         // when
@@ -45,7 +46,7 @@ class LineToolTest
     void preview()
     {
         // given
-        LineTool tool = new LineTool();
+        LineTool tool = new LineTool(controller);
         tool.pressed(g, 50, 100);
         tool.dragged(g, 200, 150);
 
@@ -60,7 +61,7 @@ class LineToolTest
     void released()
     {
         // given
-        LineTool tool = new LineTool();
+        LineTool tool = new LineTool(controller);
         tool.pressed(g, 50, 100);
 
         // when
