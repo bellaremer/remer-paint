@@ -23,7 +23,7 @@ class EraserToolTest
 
         // then
         verify(g).setColor(Color.WHITE);
-        verify(g).fillRect(50, 100, 10, 10);
+        verify(g).fillRect(45, 95, 10, 10 );    // 50 - 5, 100 -5, 10, 10
     }
 
     @Test
@@ -37,7 +37,7 @@ class EraserToolTest
 
         // then
         verify(g).setColor(Color.WHITE);
-        verify(g).fillRect(200, 150, 10, 10);
+        verify(g).fillRect(195, 145, 10, 10);   // 200 -5, 150 - 5, 10, 10
     }
 
     @Test
