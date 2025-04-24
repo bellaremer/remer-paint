@@ -10,7 +10,7 @@ import static org.mockito.Mockito.*;
 
 class PencilToolTest {
 
-    private Graphics g = mock();
+    private Graphics2D g = mock();
 
     @Test
     void pressed()

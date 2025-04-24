@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
 
 public class PaintGui extends JFrame
 {
@@ -40,28 +41,38 @@ public class PaintGui extends JFrame
 
         // Button for color selection
         JButton colorButton = new JButton("Select Color");
-        colorButton.addActionListener(e -> {
+        colorButton.addActionListener(e ->
+        {
             Color newColor = JColorChooser.showDialog(PaintGui.this, "Choose Color", Color.BLACK);
-            if (newColor != null) {
+            if (newColor != null)
+            {
                 controller.setCurrentColor(newColor); // Update the controller with the new color
             }
         });
         buttonPanel.add(colorButton);
 
+        // Inside the PaintGui constructor, add this button
+        JButton bucketButton = new JButton("Bucket Fill");
+        bucketButton.addActionListener(e ->
+        {
+            controller.setTool(new BucketFillTool());
+            canvas.setTool(controller.getCurrentTool());
+        });
+        buttonPanel.add(bucketButton);
+
         // Add the button panel to the top of the window
         add(buttonPanel, BorderLayout.NORTH);
         add(canvas, BorderLayout.CENTER);
         canvas.setTool(controller.getCurrentTool());
-
-
+        
         canvas.addMouseMotionListener(new MouseMotionListener()
         {
             @Override
             public void mouseDragged(MouseEvent e)
             {
-                Graphics g = canvas.getImage().getGraphics();
+                Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
                 g.setColor(Color.BLACK);
-                controller.mouseDragged(canvas.getImage().getGraphics(), e.getX(), e.getY());
+                controller.mouseDragged((Graphics2D) canvas.getImage().getGraphics(), e.getX(), e.getY());
                 canvas.repaint();
             }
 
@@ -82,18 +93,19 @@ public class PaintGui extends JFrame
 
             @Override
             public void mousePressed(MouseEvent e) {
-                Graphics g = canvas.getImage().getGraphics();
+                BufferedImage image = canvas.getImage();
+                Graphics2D g = (Graphics2D) image.getGraphics();
                 g.setColor(Color.BLACK);
-                controller.mousePressed(canvas.getImage().getGraphics(), e.getX(), e.getY());
+                controller.mousePressed(image, g, e.getX(), e.getY());
                 canvas.repaint();
             }
 
             @Override
             public void mouseReleased(MouseEvent e)
             {
-                Graphics g = canvas.getImage().getGraphics();
+                Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
                 g.setColor(Color.BLACK);
-                controller.mouseReleased(canvas.getImage().getGraphics(), e.getX(), e.getY());
+                controller.mouseReleased((Graphics2D) canvas.getImage().getGraphics(), e.getX(), e.getY());
                 canvas.repaint();
             }
 

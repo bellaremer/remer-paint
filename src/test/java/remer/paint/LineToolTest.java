@@ -9,7 +9,7 @@ import static org.mockito.Mockito.*;
 class LineToolTest
 {
 
-    private Graphics g = mock(Graphics.class);
+    private Graphics2D g = mock(Graphics2D.class);
     private PaintController controller = mock(PaintController.class);
 
     @Test

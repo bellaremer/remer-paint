@@ -9,7 +9,7 @@ public class PencilTool implements Tool
     private int y;
 
     @Override
-    public void pressed(Graphics g, int x, int y)
+    public void pressed(Graphics2D g, int x, int y)
     {
         this.x = x;
         this.y = y;
@@ -17,7 +17,7 @@ public class PencilTool implements Tool
     }
 
     @Override
-    public void dragged(Graphics g, int x, int y)
+    public void dragged(Graphics2D g, int x, int y)
     {
         g.drawLine(this.x, this.y, x, y);
         this.x = x;
@@ -25,12 +25,12 @@ public class PencilTool implements Tool
     }
 
     @Override
-    public void preview(Graphics g) {
+    public void preview(Graphics2D g) {
         // nothing
     }
 
     @Override
-    public void released(Graphics g, int x, int y)
+    public void released(Graphics2D g, int x, int y)
     {
         // no action needed
     }
