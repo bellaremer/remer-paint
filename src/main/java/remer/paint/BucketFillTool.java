@@ -2,52 +2,50 @@ package remer.paint;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Stack;
 
-public class BucketFillTool implements Tool
-{
+public class BucketFillTool implements Tool {
     private Color newColor;
-    PaintController paintController;
+    private DrawingComponent drawingComponent;
+    private PaintController controller;
+
+    public BucketFillTool(DrawingComponent drawingComponent) {
+        this.drawingComponent = drawingComponent;
+    }
 
     @Override
-    public void pressed(Graphics2D g, int x, int y)
-    {
-        BufferedImage image = ((DrawingComponent) g.getClip()).getImage();
+    public void pressed(Graphics2D g, int x, int y) {
+        BufferedImage image = drawingComponent.getImage();
         Color targetColor = new Color(image.getRGB(x, y));
-        newColor = paintController.getCurrentColor();
+        newColor = controller.getCurrentColor();
 
-        if (!targetColor.equals(newColor))
-        {
+        if (!targetColor.equals(newColor)) {
             floodFill(image, x, y, targetColor, newColor);
+            drawingComponent.repaint(); // Repaint the component after filling
         }
     }
 
     @Override
-    public void dragged(Graphics2D g, int x, int y)
-    {
+    public void dragged(Graphics2D g, int x, int y) {
         // No action needed on drag
     }
 
     @Override
-    public void preview(Graphics2D g)
-    {
+    public void preview(Graphics2D g) {
         // No preview needed for paint bucket
     }
 
     @Override
-    public void released(Graphics2D g, int x, int y)
-    {
+    public void released(Graphics2D g, int x, int y) {
         // No action needed on release
     }
 
-    private void floodFill(BufferedImage image, int x, int y, Color targetColor, Color newColor)
-    {
-        if (x < 0 || x >= image.getWidth() || y < 0 || y >= image.getHeight())
-        {
+    private void floodFill(BufferedImage image, int x, int y, Color targetColor, Color newColor) {
+        // Check for out of bounds
+        if (x < 0 || x >= image.getWidth() || y < 0 || y >= image.getHeight()) {
             return; // Out of bounds
         }
-        if (!new Color(image.getRGB(x, y)).equals(targetColor))
-        {
+        // Check if the current pixel is the target color
+        if (!new Color(image.getRGB(x, y)).equals(targetColor)) {
             return; // Not the target color
         }
 
