@@ -52,7 +52,11 @@ public class EraserTool implements Tool
 
     private void erase(int x, int y)
     {
-        Shape eraserShape = new Ellipse2D.Float(x - ERASER_THICKNESS / 2, y - ERASER_THICKNESS / 2, ERASER_THICKNESS, ERASER_THICKNESS);
+        Shape eraserShape = new Ellipse2D.Float(
+                x - ERASER_THICKNESS / 2,
+                y - ERASER_THICKNESS / 2,
+                ERASER_THICKNESS,
+                ERASER_THICKNESS);
         g2d.fill(eraserShape);
     }
 }

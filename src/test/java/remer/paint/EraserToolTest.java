@@ -10,7 +10,7 @@ import static org.mockito.Mockito.*;
 
 class EraserToolTest
 {
-    private final BufferedImage canvas = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);;
+    private final BufferedImage canvas = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
     private final Graphics2D g = mock(Graphics2D.class);
     private final EraserTool tool = new EraserTool(canvas);
 
