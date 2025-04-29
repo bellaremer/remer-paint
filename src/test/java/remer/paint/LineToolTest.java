@@ -20,7 +20,7 @@ class LineToolTest
         LineTool tool = new LineTool(controller);
 
         // when
-        tool.pressed(g, canvas,50, 100);
+        tool.pressed(g, canvas, 50, 100);
 
         // then
         assertEquals(50, tool.x1);

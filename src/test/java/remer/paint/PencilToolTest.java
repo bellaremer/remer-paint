@@ -50,7 +50,7 @@ class PencilToolTest
         // given
 
         //when
-        tool.released(g,100, 200);
+        tool.released(g, 100, 200);
 
         // then
         verifyNoMoreInteractions(g);

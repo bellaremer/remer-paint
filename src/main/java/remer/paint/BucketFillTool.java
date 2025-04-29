@@ -29,13 +29,11 @@ public class BucketFillTool implements Tool
     private void floodFill(BufferedImage image, int x, int y, Color targetColor, Color newColor)
     {
         // Check for out of bounds
-        if (x < 0 || x >= image.getWidth() || y < 0 || y >= image.getHeight())
-        {
+        if (x < 0 || x >= image.getWidth() || y < 0 || y >= image.getHeight()) {
             return; // Out of bounds
         }
         // Check if the current pixel is the target color
-        if (!new Color(image.getRGB(x, y)).equals(targetColor))
-        {
+        if (!new Color(image.getRGB(x, y)).equals(targetColor)) {
             return; // Not the target color
         }
 

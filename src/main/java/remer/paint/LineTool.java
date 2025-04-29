@@ -31,10 +31,10 @@ public class LineTool implements Tool
     @Override
     public void dragged(Graphics2D g, int x, int y)
     {
-        this.x2 = x;
-        this.y2 = y;
         g.setColor(controller.getCurrentColor());
-        g.drawLine(x1, y1, x2, y2);
+        g.drawLine(this.x1, this.y1, x, y); // Draw line from start to current position
+        this.x2 = x; // Update the end point
+        this.y2 = y; // Update the end point
     }
 
 

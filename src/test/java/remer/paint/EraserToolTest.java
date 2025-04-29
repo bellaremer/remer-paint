@@ -20,7 +20,7 @@ class EraserToolTest
         // given
 
         // when
-        tool.pressed(g, canvas,50, 100);
+        tool.pressed(g, canvas, 50, 100);
 
         // then
         verify(g).setColor(Color.WHITE);
@@ -33,7 +33,7 @@ class EraserToolTest
         // given
 
         // when
-        tool.dragged(g,200, 150);
+        tool.dragged(g, 200, 150);
 
         // then
         verify(g).setColor(Color.WHITE);
