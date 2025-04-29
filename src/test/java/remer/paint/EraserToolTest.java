@@ -18,26 +18,28 @@ class EraserToolTest
     void pressed()
     {
         // given
+        canvas.setRGB(50, 100, Color.RED.getRGB());
 
         // when
         tool.pressed(g, canvas, 50, 100);
 
         // then
         verify(g).setColor(Color.WHITE);
-        verify(g).fill(any(Shape.class)); //Verify that fill is called with any shape
+        assertEquals(Color.WHITE.getRGB(), canvas.getRGB(50, 100));
     }
 
     @Test
     void dragged()
     {
         // given
+        canvas.setRGB(200, 150, Color.RED.getRGB());
 
         // when
         tool.dragged(g, 200, 150);
 
         // then
         verify(g).setColor(Color.WHITE);
-        verify(g).fill(any(Shape.class));
+        assertEquals(Color.WHITE.getRGB(), canvas.getRGB(200, 150));
     }
 
     @Test

@@ -2,7 +2,6 @@ package remer.paint;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.geom.Ellipse2D;
 
 public class EraserTool implements Tool
 {
@@ -62,7 +61,7 @@ public class EraserTool implements Tool
                 // Check if the current point is within the circular area
                 if (i * i + j * j <= halfThickness * halfThickness)
                 {
-                    // set the pizel color to the background color
+                    // set the pixel color to the background color
                     canvas.setRGB(x + i, y + j, backgroundColor.getRGB());
                 }
             }

@@ -18,6 +18,8 @@ class LineToolTest
     {
         // given
         LineTool tool = new LineTool(controller);
+        Color color = Color.RED;
+        when(controller.getCurrentColor()).thenReturn(color);
 
         // when
         tool.pressed(g, canvas, 50, 100);
@@ -25,6 +27,7 @@ class LineToolTest
         // then
         assertEquals(50, tool.x1);
         assertEquals(100, tool.y1);
+        verify(g).setColor(color);
         verify(g).drawLine(50, 100, 50, 100);
     }
 
@@ -48,14 +51,17 @@ class LineToolTest
     {
         // given
         LineTool tool = new LineTool(controller);
+        Color color = Color.RED;
+        when(controller.getCurrentColor()).thenReturn(color);
         tool.pressed(g, canvas, 50, 100);
         tool.dragged(g, 200, 150);
 
-        // when
+       // when
         tool.preview(g);
 
-        // then
-        verify(g, times(1)).drawLine(50, 100, 200, 150);
+       // then
+       verify(g).setColor(color);
+       verify(g).drawLine(50, 100, 200, 150); // Verify the preview line is drawn correctly
     }
 
     @Test
