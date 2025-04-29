@@ -1,15 +1,15 @@
 package remer.paint;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class PencilTool implements Tool
 {
-
     private int x;
     private int y;
 
     @Override
-    public void pressed(Graphics2D g, int x, int y)
+    public void pressed(Graphics2D g, BufferedImage image, int x, int y)
     {
         this.x = x;
         this.y = y;

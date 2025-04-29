@@ -6,25 +6,22 @@ import java.awt.image.BufferedImage;
 public class BucketFillTool implements Tool
 {
     private Color newColor;
-    private DrawingComponent drawingComponent;
     private PaintController controller;
 
-    public BucketFillTool(DrawingComponent drawingComponent, PaintController controller) {
-        this.drawingComponent = drawingComponent;
-        this.controller = controller;
+    public BucketFillTool()
+    {
+        // no parameters needed
     }
 
     @Override
-    public void pressed(Graphics2D g, int x, int y)
+    public void pressed(Graphics2D g, BufferedImage image, int x, int y)
     {
-        BufferedImage image = drawingComponent.getImage();
         Color targetColor = new Color(image.getRGB(x, y));
         newColor = controller.getCurrentColor();
 
         if (!targetColor.equals(newColor))
         {
             floodFill(image, x, y, targetColor, newColor);
-            drawingComponent.repaint(); // Repaint the component after filling
         }
     }
 
@@ -32,11 +29,13 @@ public class BucketFillTool implements Tool
     private void floodFill(BufferedImage image, int x, int y, Color targetColor, Color newColor)
     {
         // Check for out of bounds
-        if (x < 0 || x >= image.getWidth() || y < 0 || y >= image.getHeight()) {
+        if (x < 0 || x >= image.getWidth() || y < 0 || y >= image.getHeight())
+        {
             return; // Out of bounds
         }
         // Check if the current pixel is the target color
-        if (!new Color(image.getRGB(x, y)).equals(targetColor)) {
+        if (!new Color(image.getRGB(x, y)).equals(targetColor))
+        {
             return; // Not the target color
         }
 

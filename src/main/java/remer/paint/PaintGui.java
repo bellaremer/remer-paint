@@ -30,7 +30,7 @@ public class PaintGui extends JFrame
         });
         buttonPanel.add(lineButton);
 
-        // Setting up the eraser button
+        // Button for eraser tool
         JButton eraserButton = new JButton("Eraser");
         eraserButton.addActionListener(e -> {
             controller.setTool(new EraserTool(canvas.getImage())); // Pass the canvas image to the eraser tool
@@ -53,7 +53,7 @@ public class PaintGui extends JFrame
         // Button for bucket fill tool
         JButton bucketButton = new JButton("Bucket Fill");
         bucketButton.addActionListener(e -> {
-            controller.setTool(new BucketFillTool(canvas, controller));
+            controller.setTool(new BucketFillTool());
             canvas.setTool(controller.getCurrentTool());
         });
         buttonPanel.add(bucketButton);
@@ -68,8 +68,6 @@ public class PaintGui extends JFrame
             @Override
             public void mouseDragged(MouseEvent e)
             {
-                Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
-                g.setColor(Color.BLACK);
                 controller.mouseDragged((Graphics2D) canvas.getImage().getGraphics(), e.getX(), e.getY());
                 canvas.repaint();
             }
@@ -93,7 +91,6 @@ public class PaintGui extends JFrame
             public void mousePressed(MouseEvent e) {
                 BufferedImage image = canvas.getImage();
                 Graphics2D g = (Graphics2D) image.getGraphics();
-                g.setColor(Color.BLACK);
                 controller.mousePressed(image, g, e.getX(), e.getY());
                 canvas.repaint();
             }
@@ -101,8 +98,6 @@ public class PaintGui extends JFrame
             @Override
             public void mouseReleased(MouseEvent e)
             {
-                Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
-                g.setColor(Color.BLACK);
                 controller.mouseReleased((Graphics2D) canvas.getImage().getGraphics(), e.getX(), e.getY());
                 canvas.repaint();
             }

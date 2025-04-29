@@ -36,7 +36,7 @@ public class PaintController
 
     public void mousePressed(BufferedImage image, Graphics2D g, int x, int y)
     {
-        currentTool.pressed(g, x, y);
+        currentTool.pressed(g, image, x, y);
     }
 
     public void mouseDragged(Graphics2D g, int x, int y)

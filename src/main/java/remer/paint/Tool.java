@@ -1,10 +1,11 @@
 package remer.paint;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public interface Tool
 {
-    void pressed(Graphics2D g, int x, int y);
+    void pressed(Graphics2D g, BufferedImage image, int x, int y);
 
     void dragged(Graphics2D g, int x, int y);
 

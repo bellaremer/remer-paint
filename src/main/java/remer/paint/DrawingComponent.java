@@ -29,10 +29,12 @@ public class DrawingComponent extends JComponent
     protected void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
         g.drawImage(image, 0, 0, null);
 
-        tool.preview((Graphics2D) g);
+        if (tool != null)
+        {
+            tool.preview((Graphics2D) g);
+        }
     }
 
     public void setTool(Tool tool)

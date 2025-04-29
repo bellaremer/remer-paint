@@ -26,7 +26,7 @@ public class EraserTool implements Tool
     }
 
     @Override
-    public void pressed(Graphics2D g, int x, int y)
+    public void pressed(Graphics2D g, BufferedImage image, int x, int y)
     {
         g.setColor(backgroundColor);
         erase(g, x, y); // Erase at the initial press point
@@ -52,11 +52,20 @@ public class EraserTool implements Tool
 
     private void erase(Graphics2D g, int x, int y)
     {
-        Shape eraserShape = new Ellipse2D.Float(
-                x - ERASER_THICKNESS / 2,
-                y - ERASER_THICKNESS / 2,
-                ERASER_THICKNESS,
-                ERASER_THICKNESS);
-        g.fill(eraserShape);    // using the passed Graphics2D instance
+        int halfThickness = (int) (ERASER_THICKNESS / 2);
+
+        // Loop though the area of the eraser
+        for (int i = -halfThickness; i <= halfThickness; i++)
+        {
+            for (int j = -halfThickness; j <= halfThickness; j++)
+            {
+                // Check if the current point is within the circular area
+                if (i * i + j * j <= halfThickness * halfThickness)
+                {
+                    // set the pizel color to the background color
+                    canvas.setRGB(x + i, y + j, backgroundColor.getRGB());
+                }
+            }
+        }
     }
 }
