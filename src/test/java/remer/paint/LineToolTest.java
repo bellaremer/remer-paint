@@ -56,12 +56,12 @@ class LineToolTest
         tool.pressed(g, canvas, 50, 100);
         tool.dragged(g, 200, 150);
 
-       // when
+        // when
         tool.preview(g);
 
-       // then
-       verify(g).setColor(color);
-       verify(g).drawLine(50, 100, 200, 150); // Verify the preview line is drawn correctly
+        // then
+        verify(g).setColor(color);
+        verify(g).drawLine(50, 100, 200, 150); // Verify the preview line is drawn correctly
     }
 
     @Test
