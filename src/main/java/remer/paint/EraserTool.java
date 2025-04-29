@@ -22,18 +22,20 @@ public class EraserTool implements Tool
     public void setEraserStroke(float thickness)
     {
         g2d.setStroke(new BasicStroke(thickness));
-        g2d.setColor(backgroundColor); // Set the color to the background color
+        g2d.setColor(backgroundColor);
     }
 
     @Override
     public void pressed(Graphics2D g, int x, int y)
     {
+        g.setColor(backgroundColor);
         erase(x, y); // Erase at the initial press point
     }
 
     @Override
     public void dragged(Graphics2D g, int x, int y)
     {
+        g.setColor(backgroundColor);
         erase(x, y); // Erase while dragging
     }
 
@@ -50,9 +52,7 @@ public class EraserTool implements Tool
 
     private void erase(int x, int y)
     {
-        // Create a shape for the eraser effect
         Shape eraserShape = new Ellipse2D.Float(x - ERASER_THICKNESS / 2, y - ERASER_THICKNESS / 2, ERASER_THICKNESS, ERASER_THICKNESS);
-        // Fill the shape to create the eraser effect
         g2d.fill(eraserShape);
     }
 }

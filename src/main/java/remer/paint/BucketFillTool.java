@@ -3,43 +3,34 @@ package remer.paint;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class BucketFillTool implements Tool {
+public class BucketFillTool implements Tool
+{
     private Color newColor;
     private DrawingComponent drawingComponent;
     private PaintController controller;
 
-    public BucketFillTool(DrawingComponent drawingComponent) {
+    public BucketFillTool(DrawingComponent drawingComponent, PaintController controller) {
         this.drawingComponent = drawingComponent;
+        this.controller = controller;
     }
 
     @Override
-    public void pressed(Graphics2D g, int x, int y) {
+    public void pressed(Graphics2D g, int x, int y)
+    {
         BufferedImage image = drawingComponent.getImage();
         Color targetColor = new Color(image.getRGB(x, y));
         newColor = controller.getCurrentColor();
 
-        if (!targetColor.equals(newColor)) {
+        if (!targetColor.equals(newColor))
+        {
             floodFill(image, x, y, targetColor, newColor);
             drawingComponent.repaint(); // Repaint the component after filling
         }
     }
 
-    @Override
-    public void dragged(Graphics2D g, int x, int y) {
-        // No action needed on drag
-    }
 
-    @Override
-    public void preview(Graphics2D g) {
-        // No preview needed for paint bucket
-    }
-
-    @Override
-    public void released(Graphics2D g, int x, int y) {
-        // No action needed on release
-    }
-
-    private void floodFill(BufferedImage image, int x, int y, Color targetColor, Color newColor) {
+    private void floodFill(BufferedImage image, int x, int y, Color targetColor, Color newColor)
+    {
         // Check for out of bounds
         if (x < 0 || x >= image.getWidth() || y < 0 || y >= image.getHeight()) {
             return; // Out of bounds
@@ -58,4 +49,20 @@ public class BucketFillTool implements Tool {
         floodFill(image, x, y + 1, targetColor, newColor); // Down
         floodFill(image, x, y - 1, targetColor, newColor); // Up
     }
+
+    @Override
+    public void dragged(Graphics2D g, int x, int y) {
+        // No action needed on drag
+    }
+
+    @Override
+    public void preview(Graphics2D g) {
+        // No preview needed for paint bucket
+    }
+
+    @Override
+    public void released(Graphics2D g, int x, int y) {
+        // No action needed on release
+    }
+
 }

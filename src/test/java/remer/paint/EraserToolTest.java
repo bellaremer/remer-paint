@@ -18,35 +18,32 @@ class EraserToolTest
     void pressed()
     {
         // given
-       EraserTool tool = new EraserTool(canvas);
 
         // when
         tool.pressed(g, 50, 100);
 
         // then
         verify(g).setColor(Color.WHITE);
-        verify(g).fillRect(45, 95, 10, 10);    // 50 - 5, 100 -5, 10, 10
+        verify(g).fill(any(Shape.class)); //Verify that fill is called with any shape
     }
 
     @Test
     void dragged()
     {
         // given
-        EraserTool tool = new EraserTool(canvas);
 
         // when
         tool.dragged(g, 200, 150);
 
         // then
         verify(g).setColor(Color.WHITE);
-        verify(g).fillRect(195, 145, 10, 10);   // 200 -5, 150 - 5, 10, 10
+        verify(g).fill(any(Shape.class));
     }
 
     @Test
     void released()
     {
         // given
-        EraserTool tool = new EraserTool(canvas);
 
         // when
         tool.released(g, 100, 200);

@@ -30,7 +30,7 @@ public class PaintGui extends JFrame
         });
         buttonPanel.add(lineButton);
 
-        // Inside the PaintGui constructor, when setting up the eraser button
+        // Setting up the eraser button
         JButton eraserButton = new JButton("Eraser");
         eraserButton.addActionListener(e -> {
             controller.setTool(new EraserTool(canvas.getImage())); // Pass the canvas image to the eraser tool
@@ -53,7 +53,7 @@ public class PaintGui extends JFrame
         // Button for bucket fill tool
         JButton bucketButton = new JButton("Bucket Fill");
         bucketButton.addActionListener(e -> {
-            controller.setTool(new BucketFillTool(canvas)); // Pass the canvas to the tool
+            controller.setTool(new BucketFillTool(canvas, controller));
             canvas.setTool(controller.getCurrentTool());
         });
         buttonPanel.add(bucketButton);
