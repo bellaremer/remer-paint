@@ -29,14 +29,14 @@ public class EraserTool implements Tool
     public void pressed(Graphics2D g, int x, int y)
     {
         g.setColor(backgroundColor);
-        erase(x, y); // Erase at the initial press point
+        erase(g, x, y); // Erase at the initial press point
     }
 
     @Override
     public void dragged(Graphics2D g, int x, int y)
     {
         g.setColor(backgroundColor);
-        erase(x, y); // Erase while dragging
+        erase(g, x, y); // Erase while dragging
     }
 
     @Override
@@ -50,13 +50,13 @@ public class EraserTool implements Tool
         // No action needed on release
     }
 
-    private void erase(int x, int y)
+    private void erase(Graphics2D g, int x, int y)
     {
         Shape eraserShape = new Ellipse2D.Float(
                 x - ERASER_THICKNESS / 2,
                 y - ERASER_THICKNESS / 2,
                 ERASER_THICKNESS,
                 ERASER_THICKNESS);
-        g2d.fill(eraserShape);
+        g.fill(eraserShape);    // using the passed Graphics2D instance
     }
 }
