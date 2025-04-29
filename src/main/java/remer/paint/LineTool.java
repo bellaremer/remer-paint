@@ -10,7 +10,7 @@ public class LineTool implements Tool
     public int x2;
     public int y2;
 
-    private PaintController controller;
+    private final PaintController controller;
 
     public LineTool(PaintController controller)
     {
@@ -31,10 +31,9 @@ public class LineTool implements Tool
     @Override
     public void dragged(Graphics2D g, int x, int y)
     {
-        g.setColor(controller.getCurrentColor());
-        g.drawLine(this.x1, this.y1, x, y); // Draw line from start to current position
-        this.x2 = x; // Update the end point
-        this.y2 = y; // Update the end point
+        // update the endpoint for preview
+        this.x2 = x;
+        this.y2 = y;
     }
 
 

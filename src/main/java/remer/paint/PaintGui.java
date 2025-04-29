@@ -53,7 +53,7 @@ public class PaintGui extends JFrame
         // Button for bucket fill tool
         JButton bucketButton = new JButton("Bucket Fill");
         bucketButton.addActionListener(e -> {
-            controller.setTool(new BucketFillTool());
+            controller.setTool(new BucketFillTool(controller));
             canvas.setTool(controller.getCurrentTool());
         });
         buttonPanel.add(bucketButton);

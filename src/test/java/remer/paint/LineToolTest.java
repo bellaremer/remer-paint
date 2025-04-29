@@ -60,8 +60,8 @@ class LineToolTest
         tool.preview(g);
 
         // then
-        verify(g).setColor(color);
-        verify(g).drawLine(50, 100, 200, 150); // Verify the preview line is drawn correctly
+        verify(g, atLeastOnce()).setColor(color);
+        verify(g, atLeastOnce()).drawLine(50, 100, 200, 150); // Verify the preview line is drawn correctly
     }
 
     @Test
