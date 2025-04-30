@@ -5,37 +5,36 @@ import java.awt.image.BufferedImage;
 
 public class EraserTool implements Tool
 {
-    private static final float ERASER_THICKNESS = 20.0f; // Set the thickness of the eraser
-    private Color backgroundColor; // Background color to erase to
-    private BufferedImage canvas; // The canvas to draw on
-    private Graphics2D g2d; // Graphics2D object for drawing
+    private int prevX;
+    private int prevY;
+    private final float ERASER_THICKNESS = 20.0f;
+    private BasicStroke eraserStroke;
+    private Color backgroundColor;
 
     public EraserTool(BufferedImage canvas)
     {
-        this.canvas = canvas;
-        this.g2d = canvas.createGraphics();
-        this.backgroundColor = Color.WHITE; // Assuming white is the background color
-        setEraserStroke(ERASER_THICKNESS); // Set the initial stroke thickness
-    }
-
-    public void setEraserStroke(float thickness)
-    {
-        g2d.setStroke(new BasicStroke(thickness));
-        g2d.setColor(backgroundColor);
+        this.eraserStroke = new BasicStroke(ERASER_THICKNESS, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+        this.backgroundColor = Color.WHITE;
     }
 
     @Override
     public void pressed(Graphics2D g, BufferedImage image, int x, int y)
     {
         g.setColor(backgroundColor);
-        erase(g, x, y); // Erase at the initial press point
+        g.setStroke(eraserStroke);
+        prevX = x;
+        prevY = y;
+        g.drawLine(x, y, x, y); // Draw a point where the eraser is pressed
     }
 
     @Override
     public void dragged(Graphics2D g, int x, int y)
     {
         g.setColor(backgroundColor);
-        erase(g, x, y); // Erase while dragging
+        g.setStroke(eraserStroke);
+        g.drawLine(prevX, prevY, x, y);
+        prevX = x;
+        prevY = y;
     }
 
     @Override
@@ -46,25 +45,9 @@ public class EraserTool implements Tool
     @Override
     public void released(Graphics2D g, int x, int y)
     {
-        // No action needed on release
+        g.setColor(backgroundColor);
+        g.setStroke(eraserStroke);
+        g.drawLine(prevX, prevY, x, y);
     }
 
-    private void erase(Graphics2D g, int x, int y)
-    {
-        int halfThickness = (int) (ERASER_THICKNESS / 2);
-
-        // Loop though the area of the eraser
-        for (int i = -halfThickness; i <= halfThickness; i++)
-        {
-            for (int j = -halfThickness; j <= halfThickness; j++)
-            {
-                // Check if the current point is within the circular area
-                if (i * i + j * j <= halfThickness * halfThickness)
-                {
-                    // set the pixel color to the background color
-                    canvas.setRGB(x + i, y + j, backgroundColor.getRGB());
-                }
-            }
-        }
-    }
 }

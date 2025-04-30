@@ -19,12 +19,13 @@ class EraserToolTest
     {
         // given
         canvas.setRGB(50, 100, Color.RED.getRGB());
+        Graphics2D g = canvas.createGraphics();
 
         // when
         tool.pressed(g, canvas, 50, 100);
+        g.dispose();
 
         // then
-        verify(g).setColor(Color.WHITE);
         assertEquals(Color.WHITE.getRGB(), canvas.getRGB(50, 100));
     }
 
@@ -33,20 +34,22 @@ class EraserToolTest
     {
         // given
         canvas.setRGB(200, 150, Color.RED.getRGB());
+        Graphics2D g = canvas.createGraphics(); // Use a real Graphics2D object
+        tool.pressed(g, canvas, 200, 150); // Simulate pressing first
 
         // when
-        tool.dragged(g, 200, 150);
+        tool.dragged(g, 250, 150); // Drag to a new position
+        g.dispose(); // Dispose of the graphics context
 
         // then
-        verify(g).setColor(Color.WHITE);
-        assertEquals(Color.WHITE.getRGB(), canvas.getRGB(200, 150));
+        assertEquals(Color.WHITE.getRGB(), canvas.getRGB(200, 150)); // Check the original point
+        assertEquals(Color.WHITE.getRGB(), canvas.getRGB(250, 150)); // Check the dragged point
     }
 
     @Test
     void released()
     {
         // given
-
         // when
         tool.released(g, 100, 200);
 
