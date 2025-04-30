@@ -7,13 +7,13 @@ public class EraserTool implements Tool
 {
     private int prevX;
     private int prevY;
-    private final float ERASER_THICKNESS = 20.0f;
+    private final float eraserThickness = 20.0f;
     private BasicStroke eraserStroke;
     private Color backgroundColor;
 
     public EraserTool(BufferedImage canvas)
     {
-        this.eraserStroke = new BasicStroke(ERASER_THICKNESS, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+        this.eraserStroke = new BasicStroke(eraserThickness, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         this.backgroundColor = Color.WHITE;
     }
 
