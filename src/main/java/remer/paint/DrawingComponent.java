@@ -10,7 +10,6 @@ import java.awt.image.BufferedImage;
 
 public class DrawingComponent extends JComponent
 {
-
     private final BufferedImage image = new BufferedImage(
             800,
             600,
@@ -21,7 +20,7 @@ public class DrawingComponent extends JComponent
 
     public DrawingComponent()
     {
-        Graphics g = image.getGraphics();
+        Graphics2D g = (Graphics2D) image.getGraphics();
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, image.getWidth(), image.getHeight());
     }
@@ -32,7 +31,10 @@ public class DrawingComponent extends JComponent
         super.paintComponent(g);
         g.drawImage(image, 0, 0, null);
 
-        tool.preview(g);
+        if (tool != null)
+        {
+            tool.preview((Graphics2D) g);
+        }
     }
 
     public void setTool(Tool tool)

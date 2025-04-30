@@ -1,6 +1,7 @@
 package remer.paint;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class LineTool implements Tool
 {
@@ -9,7 +10,7 @@ public class LineTool implements Tool
     public int x2;
     public int y2;
 
-    private PaintController controller;
+    private final PaintController controller;
 
     public LineTool(PaintController controller)
     {
@@ -17,7 +18,7 @@ public class LineTool implements Tool
     }
 
     @Override
-    public void pressed(Graphics g, int x, int y)
+    public void pressed(Graphics2D g, BufferedImage image, int x, int y)
     {
         this.x1 = x;
         this.y1 = y;
@@ -28,23 +29,26 @@ public class LineTool implements Tool
     }
 
     @Override
-    public void dragged(Graphics g, int x, int y)
+    public void dragged(Graphics2D g, int x, int y)
     {
-       this.x2 = x;
-       this.y2 = y;
+        // update the endpoint for preview
+        this.x2 = x;
+        this.y2 = y;
     }
 
+
     @Override
-    public void preview(Graphics g)
+    public void preview(Graphics2D g)
     {
         g.setColor(controller.getCurrentColor());
         g.drawLine(x1, y1, x2, y2);
     }
 
     @Override
-    public void released(Graphics g, int x, int y)
+    public void released(Graphics2D g, int x, int y)
     {
         g.setColor(controller.getCurrentColor());
         g.drawLine(this.x1, this.y1, x, y);
     }
+
 }

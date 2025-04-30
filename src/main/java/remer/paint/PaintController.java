@@ -1,13 +1,15 @@
 package remer.paint;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class PaintController
 {
     private Tool currentTool;
     private Color currentColor;
 
-    public PaintController() {
+    public PaintController()
+    {
         this.currentTool = new LineTool(this); // Default tool
         this.currentColor = Color.BLACK;    // deafult color
     }
@@ -27,26 +29,27 @@ public class PaintController
         this.currentTool = tool;
     }
 
-    public Tool getCurrentTool() {
+    public Tool getCurrentTool()
+    {
         return currentTool;
     }
 
-    public void mousePressed(Graphics g, int x, int y)
+    public void mousePressed(BufferedImage image, Graphics2D g, int x, int y)
     {
-        currentTool.pressed(g, x, y);
+        currentTool.pressed(g, image, x, y);
     }
 
-    public void mouseDragged(Graphics g, int x, int y)
+    public void mouseDragged(Graphics2D g, int x, int y)
     {
         currentTool.dragged(g, x, y);
     }
 
-    public void mouseReleased(Graphics g, int x, int y)
+    public void mouseReleased(Graphics2D g, int x, int y)
     {
         currentTool.released(g, x, y);
     }
 
-    public void preview(Graphics g)
+    public void preview(Graphics2D g)
     {
         currentTool.preview(g);
     }

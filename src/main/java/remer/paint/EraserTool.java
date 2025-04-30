@@ -1,40 +1,53 @@
 package remer.paint;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class EraserTool implements Tool
 {
-    private static final int eraserSize = 10; //size of the eraser
+    private int prevX;
+    private int prevY;
+    private final float eraserThickness = 20.0f;
+    private BasicStroke eraserStroke;
+    private Color backgroundColor;
 
-    @Override
-    public void pressed(Graphics g, int x, int y)
+    public EraserTool(BufferedImage canvas)
     {
-        erase(g, x, y);
+        this.eraserStroke = new BasicStroke(eraserThickness, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+        this.backgroundColor = Color.WHITE;
     }
 
     @Override
-    public void dragged(Graphics g, int x, int y)
+    public void pressed(Graphics2D g, BufferedImage image, int x, int y)
     {
-        erase(g, x, y);
+        g.setColor(backgroundColor);
+        g.setStroke(eraserStroke);
+        prevX = x;
+        prevY = y;
+        g.drawLine(x, y, x, y); // Draw a point where the eraser is pressed
     }
 
     @Override
-    public void preview(Graphics g)
+    public void dragged(Graphics2D g, int x, int y)
     {
-        // No preview needed for eraser
+        g.setColor(backgroundColor);
+        g.setStroke(eraserStroke);
+        g.drawLine(prevX, prevY, x, y);
+        prevX = x;
+        prevY = y;
     }
 
     @Override
-    public void released(Graphics g, int x, int y)
-    {
-        // No action needed on release
+    public void preview(Graphics2D g) {
+        // no preview needed
     }
 
-    private void erase(Graphics g, int x, int y)
+    @Override
+    public void released(Graphics2D g, int x, int y)
     {
-        g.setColor(Color.WHITE);
-        // center the rectange around x,y
-        int halfSize = eraserSize / 2;
-        g.fillRect(x - halfSize, y - halfSize, eraserSize, eraserSize);
+        g.setColor(backgroundColor);
+        g.setStroke(eraserStroke);
+        g.drawLine(prevX, prevY, x, y);
     }
+
 }

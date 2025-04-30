@@ -2,28 +2,32 @@ package remer.paint;
 
 import org.junit.jupiter.api.Test;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class LineToolTest
 {
-
-    private Graphics g = mock(Graphics.class);
-    private PaintController controller = mock(PaintController.class);
+    private final BufferedImage canvas = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
+    private final Graphics2D g = mock(Graphics2D.class);
+    private final PaintController controller = mock(PaintController.class);
 
     @Test
     void pressed()
     {
         // given
         LineTool tool = new LineTool(controller);
+        Color color = Color.RED;
+        when(controller.getCurrentColor()).thenReturn(color);
 
         // when
-        tool.pressed(g, 50, 100);
+        tool.pressed(g, canvas, 50, 100);
 
         // then
         assertEquals(50, tool.x1);
         assertEquals(100, tool.y1);
+        verify(g).setColor(color);
         verify(g).drawLine(50, 100, 50, 100);
     }
 
@@ -32,7 +36,7 @@ class LineToolTest
     {
         // given
         LineTool tool = new LineTool(controller);
-        tool.pressed(g, 50, 100);
+        tool.pressed(g, canvas, 50, 100);
 
         // when
         tool.dragged(g, 200, 150);
@@ -47,14 +51,17 @@ class LineToolTest
     {
         // given
         LineTool tool = new LineTool(controller);
-        tool.pressed(g, 50, 100);
+        Color color = Color.RED;
+        when(controller.getCurrentColor()).thenReturn(color);
+        tool.pressed(g, canvas, 50, 100);
         tool.dragged(g, 200, 150);
 
         // when
         tool.preview(g);
 
         // then
-        verify(g).drawLine(50, 100, 200, 150);
+        verify(g, atLeastOnce()).setColor(color);
+        verify(g, atLeastOnce()).drawLine(50, 100, 200, 150); // Verify the preview line is drawn correctly
     }
 
     @Test
@@ -62,7 +69,7 @@ class LineToolTest
     {
         // given
         LineTool tool = new LineTool(controller);
-        tool.pressed(g, 50, 100);
+        tool.pressed(g, canvas, 50, 100);
 
         // when
         tool.released(g, 200, 150);

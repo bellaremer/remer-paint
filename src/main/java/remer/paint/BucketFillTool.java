@@ -1,0 +1,66 @@
+package remer.paint;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
+public class BucketFillTool implements Tool
+{
+    private final PaintController controller;
+
+    public BucketFillTool(PaintController controller)
+    {
+        this.controller = controller;
+    }
+
+    @Override
+    public void pressed(Graphics2D g, BufferedImage image, int x, int y)
+    {
+        Color targetColor = new Color(image.getRGB(x, y));
+        Color newColor = controller.getCurrentColor();
+
+        if (!targetColor.equals(newColor))
+        {
+            floodFill(image, x, y, targetColor, newColor);
+        }
+    }
+
+
+    private void floodFill(BufferedImage image, int x, int y, Color targetColor, Color newColor)
+    {
+        // Check for out of bounds
+        if (x < 0 || x >= image.getWidth() || y < 0 || y >= image.getHeight())
+        {
+            return; // Out of bounds
+        }
+        // Check if the current pixel is the target color
+        if (!new Color(image.getRGB(x, y)).equals(targetColor))
+        {
+            return; // Not the target color
+        }
+
+        // Change the color of the pixel
+        image.setRGB(x, y, newColor.getRGB());
+
+        // Recursively fill the surrounding pixels
+        floodFill(image, x + 1, y, targetColor, newColor); // Right
+        floodFill(image, x - 1, y, targetColor, newColor); // Left
+        floodFill(image, x, y + 1, targetColor, newColor); // Down
+        floodFill(image, x, y - 1, targetColor, newColor); // Up
+    }
+
+    @Override
+    public void dragged(Graphics2D g, int x, int y) {
+        // No action needed on drag
+    }
+
+    @Override
+    public void preview(Graphics2D g) {
+        // No preview needed for paint bucket
+    }
+
+    @Override
+    public void released(Graphics2D g, int x, int y) {
+        // No action needed on release
+    }
+
+}

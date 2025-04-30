@@ -3,23 +3,25 @@ package remer.paint;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
-class PencilToolTest {
-
-    private Graphics g = mock();
+class PencilToolTest
+{
+    private final BufferedImage canvas = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
+    private final Graphics2D g = mock(Graphics2D.class);
+    private final PencilTool tool = new PencilTool();
 
     @Test
     void pressed()
     {
         // given
-        PencilTool tool = new PencilTool();
 
         // when
-        tool.pressed(g, 50, 100);
+        tool.pressed(g, canvas, 50, 100);
 
         // then
         assertEquals(50, tool.getX());
@@ -31,8 +33,7 @@ class PencilToolTest {
     void dragged()
     {
         // given
-        PencilTool tool = new PencilTool();
-        tool.pressed(g, 50, 100);
+        tool.pressed(g, canvas, 50, 100);
 
         // when
         tool.dragged(g, 200, 150);
@@ -47,7 +48,6 @@ class PencilToolTest {
     void released()
     {
         // given
-        PencilTool tool = new PencilTool();
 
         //when
         tool.released(g, 100, 200);
